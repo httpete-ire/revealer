@@ -1,0 +1,61 @@
+// variables
+$container-max-width: 900px;
+
+$handle-size: 50;
+$handle-color: red;
+$handle-offset: -($handle-size / 2) + px;
+
+// responsive images
+img {
+  max-width: 100%;
+}
+
+.revealer {
+
+  // container div
+  &__container {
+    position: relative;
+    max-width: $container-max-width;
+  }
+
+  // revealer images
+  &__image {
+    display: block;
+  }
+
+  &__top-image {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 0;
+    height: 100%;
+    overflow: hidden;
+    transform: translateZ(0);
+
+    .revealer__image {
+      position: absolute;
+      left: 0;
+      top: 0;
+      display: block;
+      height: 100%;
+      width: auto;
+      max-width: none;
+    }
+
+  }
+
+  &__handle {
+    width: $handle-size + px;
+    height: $handle-size + px;
+    background: $handle-color;
+    border-radius: 50%;
+    left: 50%;
+    top: 50%;
+    position: absolute;
+    display: block;
+    margin-left: $handle-offset;
+    margin-top: $handle-offset;
+  }
+
+
+}
