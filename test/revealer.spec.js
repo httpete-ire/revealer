@@ -8,7 +8,7 @@ describe('revealer directive', function() {
   beforeEach(inject(function($compile, $rootScope) {
     $scope = $rootScope.$new();
 
-    element = $compile(angular.element('<revealer start="50"></revealer>'))($scope);
+    element = $compile(angular.element('<revealer topimage="test.png" bottomimage="test1.png"></revealer>'))($scope);
 
     scope = element.isolateScope();
 
@@ -20,8 +20,9 @@ describe('revealer directive', function() {
     expect(element).to.be.defined;
   });
 
-  it('start value should be set', function() {
-    expect(Number(scope.start)).to.equal(50);
+  it('should have the values set on it', function() {
+    expect(scope.topimage).to.equal('test.png');
+    expect(scope.bottomimage).to.equal('test1.png');
   });
 
 });

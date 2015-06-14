@@ -30,6 +30,11 @@
 
     function link(scope, elem, attr) {
 
+      // throw error when image path not provided
+      if (!scope.topimage || !scope.bottomimage) {
+        throw Error('please provide a valid path for the top and bottom image attributes on the revealer directive');
+      }
+
       angular.element(document).ready(function() {
 
         // store the needed elements
@@ -41,11 +46,10 @@
         var revealerSettings = getDimensions(revealer);
         var handlerSettings = getDimensions(handle);
 
+        // when the handle is clicked and held allow the user to slide
+        // the image width
         handle.on('mousedown', function(e) {
-
-          // add class to handler to change color
           handle.addClass(handleClass);
-
           $document.on('mousemove', handleDrag);
 
           // remove the reveal function when mouse released
@@ -54,8 +58,16 @@
             $document.off('mouseup');
             $document.off('mousemove');
           });
+
         });
 
+        /**
+         * handle the drag of the handle, if the handle is
+         * draged outside the container do nothing. Otherwise
+         * calculate the percentage and set the position of
+         * the handle and the width of the topImage container
+         * @param  {Event Object} e : Event Object
+         */
         function handleDrag(e) {
           e.preventDefault();
 
