@@ -1,29 +1,29 @@
 # Revealer
 
-Angular directive that allows two images to be layered and compared. Based on (this)[http://codyhouse.co/gem/css-jquery-image-comparison-slider/] jQuery version
+Angular directive that allows two images to be layered and compared. Based on [this](http://codyhouse.co/gem/css-jquery-image-comparison-slider/) jQuery version
 
 ##Documentation
 
 Include revelaer module source file in html
 
-````
+```html
  <script src="path/to/revealer.js"></script>
 
-````
+```
 
 Mark the revealer module as a dependecy of your angular app
 
 
 ```javascript
-angular.moudle('myApp], ['revealer']);
+angular.moudle('myApp', ['revealer']);
 ```
 
 
 Then declare the revealer directive in your html.
 
-````
+```html
 <revealer topimage="top.png" toplabel="Top Image" bottomimage="bottom.png" bottomlabel="Bottom Label"></revealer>
-````
+```
 
 ###Directive attributes
 
