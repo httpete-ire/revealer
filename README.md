@@ -61,4 +61,7 @@ bottomlabel="Bottom Label"
 
 Label to appear on the bottom image
 
+----
+
+#####inspiration
 Based on [this](http://codyhouse.co/gem/css-jquery-image-comparison-slider/) jQuery version
