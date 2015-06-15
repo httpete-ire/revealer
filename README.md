@@ -1,6 +1,6 @@
 # Revealer
 
-Angular directive that allows two images to be layered and compared. Based on [this](http://codyhouse.co/gem/css-jquery-image-comparison-slider/) jQuery version
+Angular directive that allows two images to be layered and compared, [view demo](http://httpete.com/revealer/)
 
 ##Documentation
 
@@ -60,3 +60,5 @@ bottomlabel="Bottom Label"
 ````
 
 Label to appear on the bottom image
+
+Based on [this](http://codyhouse.co/gem/css-jquery-image-comparison-slider/) jQuery version
