@@ -43,13 +43,16 @@
         var revealer = getElem(elem, '.revealer__container');
         var handleClass = 'revealer__handle--drag';
 
-        var revealerSettings = getDimensions(revealer);
-        var handlerSettings = getDimensions(handle);
+        var revealerSettings;
+        var handlerSettings;
 
         // when the handle is clicked and held allow the user to slide
         // the image width
         handle.on('mousedown', function(e) {
           handle.addClass(handleClass);
+          revealerSettings = getDimensions(revealer);
+          handlerSettings = getDimensions(handle);
+
           $document.on('mousemove', handleDrag);
 
           // remove the reveal function when mouse released
