@@ -83,11 +83,11 @@
           var percentage = (position.x / revealerSettings.width) * 100;
 
           handle.css({
-            left: px(percentage)
+            left: appendPercentage(percentage)
           });
 
           topImage.css({
-            width: px(percentage)
+            width: appendPercentage(percentage)
           });
 
         }
@@ -131,11 +131,11 @@
   }
 
   /**
-   * return the value as a string with 'px' appended
+   * return the value as a string with '%' appendPercentage
    * @param  {Number} value
    * @return {String} string representation of value
    */
-  function px(value) {
+  function appendPercentage(value) {
     return value + '%';
   }
 
