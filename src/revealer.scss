@@ -17,6 +17,12 @@ img {
   &__container {
     position: relative;
     max-width: $container-max-width;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
   }
 
   // revealer images
