@@ -1,6 +1,3 @@
-// variables
-$container-max-width: 900px;
-
 $handle-size: 50;
 $handle-color: #e74c3c;
 $handle-color-hover: #c0392b;
@@ -16,7 +13,6 @@ img {
   // container div
   &__container {
     position: relative;
-    max-width: $container-max-width;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -khtml-user-select: none;
