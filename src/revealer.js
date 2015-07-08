@@ -46,20 +46,32 @@
         var revealerSettings;
         var handlerSettings;
 
-        // when the handle is clicked and held allow the user to slide
-        // the image width
-        handle.on('mousedown', function(e) {
-          handle.addClass(handleClass);
-          revealerSettings = getDimensions(revealer);
-          handlerSettings = getDimensions(handle);
+        var multipleEvents = [{
+          action: 'mousedown',
+          move: 'mousemove',
+          release: 'mouseup'
+        }, {
+          action: 'touchstart',
+          move: 'touchmove',
+          release: 'touchend'
+        }];
 
-          $document.on('mousemove', handleDrag);
+        angular.forEach(multipleEvents, function(evenetConfig) {
 
-          // remove the reveal function when mouse released
-          $document.on('mouseup', function(e) {
-            handle.removeClass(handleClass);
-            $document.off('mouseup');
-            $document.off('mousemove');
+          handle.on(evenetConfig.action, function(e) {
+
+            handle.addClass(handleClass);
+            revealerSettings = getDimensions(revealer);
+            handlerSettings = getDimensions(handle);
+
+            // when the handle is dragged, can either
+            // be a 'mousemove' or 'touchmove' event,
+            // caluclate the position of the overlay
+            $document.on(evenetConfig.move, handleDrag);
+
+            // when the release action is triggered unbind
+            // event listerners on drag an elements
+            $document.on(evenetConfig.release, removeListeners.bind(null, evenetConfig));
           });
 
         });
@@ -74,13 +86,15 @@
         function handleDrag(e) {
           e.preventDefault();
 
-          var position = mousePos(e, revealerSettings);
+          var eventObject = (e.type === 'mousemove') ? e : e.changedTouches[0];
+          var position = mousePos(eventObject, revealerSettings);
+          var percentage;
 
           if (position.x < 0 || position.x > revealerSettings.width) {
             return;
           }
 
-          var percentage = (position.x / revealerSettings.width) * 100;
+          percentage = (position.x / revealerSettings.width) * 100;
 
           handle.css({
             left: appendPercentage(percentage)
@@ -89,11 +103,21 @@
           topImage.css({
             width: appendPercentage(percentage)
           });
+        }
 
+        /**
+         * ensure only the correct event listener functions
+         * are removed from the 'document' object
+         * @param  {Object} config
+         * @param  {Event object} e
+         */
+        function removeListeners(config, e) {
+          handle.removeClass(handleClass);
+          $document.off(config.move, handleDrag);
+          $document.off(config.release, removeListeners);
         }
 
       });
-
     }
 
   }
@@ -116,8 +140,7 @@
    */
   function mousePos(e, target) {
     return {
-      x: e.clientX - target.left,
-      y: e.clientY - target.top
+      x: e.clientX - target.left
     };
   }
 
