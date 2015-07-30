@@ -35,7 +35,7 @@
         throw Error('please provide a valid path for the top and bottom image attributes on the revealer directive');
       }
 
-      angular.element(document).ready(function() {
+      $document.ready(function() {
 
         // store the needed elements
         var handle = getElem(elem, '.revealer__handle');
