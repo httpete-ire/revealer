@@ -11,19 +11,19 @@
     return {
       restrcit: 'E',
       template: ['<div class="revealer__container">',
-                  '<img class="revealer__image" ng-src="{{bottomimage}}">',
-                  '<span class="revealer__label revealer__label--right">{{bottomlabel}}</span>',
+                  '<img class="revealer__image" ng-src="{{bottomimage || bottomImage}}">',
+                  '<span class="revealer__label revealer__label--right">{{bottomlabel || bottomLabel}}</span>',
                   '<div class="revealer__top-image">',
-                    '<img class="revealer__image" ng-src="{{topimage}}">',
-                    '<span class="revealer__label revealer__label--left">{{toplabel}}</span>',
+                    '<img class="revealer__image" ng-src="{{topimage || topImage}}">',
+                    '<span class="revealer__label revealer__label--left">{{toplabel || topLabel}}</span>',
                   '</div>',
                   '<span class="revealer__handle"></span>',
                 '</div>'].join(''),
       scope: {
-        bottomlabel: '@',
-        toplabel: '@',
-        bottomimage: '@',
-        topimage: '@'
+        bottomlabel: '@',  bottomLabel: '@',
+        toplabel: '@',     topLabel: '@',
+        bottomimage: '@',  bottomImage: '@',
+        topimage: '@',     topImage: '@'
       },
       link: link
     };
@@ -31,7 +31,8 @@
     function link(scope, elem, attr) {
 
       // throw error when image path not provided
-      if (!scope.topimage || !scope.bottomimage) {
+      if ((!scope.topimage && !scope.topImage) ||
+          (!scope.bottomimage && !scope.bottomImage)) {
         throw Error('please provide a valid path for the top and bottom image attributes on the revealer directive');
       }
 
