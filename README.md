@@ -24,6 +24,12 @@ Then declare the revealer directive in your html.
 <revealer topimage="top.png" toplabel="Top Image" bottomimage="bottom.png" bottomlabel="Bottom Label"></revealer>
 ```
 
+Alternatively,
+
+```html
+<revealer top-image="top.png" top-label="Top Image" bottom-image="bottom.png" bottom-label="Bottom Label"></revealer>
+```
+
 ###Directive attributes
 
 
