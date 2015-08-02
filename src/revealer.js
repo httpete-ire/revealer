@@ -5,6 +5,16 @@
   .module('revealer', [])
   .directive('revealer', revealer);
 
+  var multipleEvents = [{
+    action: 'mousedown',
+    move: 'mousemove',
+    release: 'mouseup'
+  }, {
+    action: 'touchstart',
+    move: 'touchmove',
+    release: 'touchend'
+  }];
+
   revealer.$inject = ['$document'];
 
   function revealer($document) {
@@ -45,16 +55,6 @@
 
         var revealerSettings;
         var handlerSettings;
-
-        var multipleEvents = [{
-          action: 'mousedown',
-          move: 'mousemove',
-          release: 'mouseup'
-        }, {
-          action: 'touchstart',
-          move: 'touchmove',
-          release: 'touchend'
-        }];
 
         angular.forEach(multipleEvents, function(evenetConfig) {
 
