@@ -1,12 +1,12 @@
 {
   "name": "revealer",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "An Angular directive that overlays an image on another",
   "main": "gulpfile.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "Pete Redmond",
   "license": "MIT",
   "devDependencies": {
     "angular-mocks": "^1.3.16",

@@ -60,3 +60,10 @@ bottomlabel="Bottom Label"
 ````
 
 Label to appear on the bottom image
+
+####start-position (optional)
+
+````
+start-position="60"
+````
+set the start position of the revealer in percentage (default : 50)

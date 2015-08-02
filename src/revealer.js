@@ -33,7 +33,8 @@
         bottomlabel: '@',
         toplabel: '@',
         bottomimage: '@',
-        topimage: '@'
+        topimage: '@',
+        startPosition: '@'
       },
       link: link
     };
@@ -45,6 +46,11 @@
         throw Error('please provide a valid path for the top and bottom image attributes on the revealer directive');
       }
 
+      // ensure the start position is a valid number and is less then 100%
+      var validStartPosition = (!isNaN(parseInt(scope.startPosition, 10)) && scope.startPosition < 100);
+
+      var startPosition = scope.startPosition = (validStartPosition) ? parseInt(scope.startPosition, 10) : 50;
+
       angular.element(document).ready(function() {
 
         // store the needed elements
@@ -52,6 +58,8 @@
         var topImage = getElem(elem, '.revealer__top-image');
         var revealer = getElem(elem, '.revealer__container');
         var handleClass = 'revealer__handle--drag';
+
+        setRevealPosition(handle, topImage, startPosition);
 
         var revealerSettings;
         var handlerSettings;
@@ -96,13 +104,7 @@
 
           percentage = (position.x / revealerSettings.width) * 100;
 
-          handle.css({
-            left: appendPercentage(percentage)
-          });
-
-          topImage.css({
-            width: appendPercentage(percentage)
-          });
+          setRevealPosition(handle, topImage, percentage);
         }
 
         /**
@@ -120,6 +122,17 @@
       });
     }
 
+  }
+
+  /**
+   * set the position of the handler and the revealer
+   * @param {DOM Object} handle   : drag handler
+   * @param {DOM object} revealer : top image to reveal
+   * @param {Number} position     : position of revealer
+   */
+  function setRevealPosition(handle, revealer, position) {
+    handle.css({ left: appendPercentage(position) });
+    revealer.css({ width: appendPercentage(position) });
   }
 
   /**
