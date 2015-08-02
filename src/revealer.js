@@ -64,9 +64,9 @@
         var revealerSettings;
         var handlerSettings;
 
-        angular.forEach(multipleEvents, function(evenetConfig) {
+        angular.forEach(multipleEvents, function(eventConfig) {
 
-          handle.on(evenetConfig.action, function(e) {
+          handle.on(eventConfig.action, function(e) {
 
             handle.addClass(handleClass);
             revealerSettings = getDimensions(revealer);
@@ -75,11 +75,11 @@
             // when the handle is dragged, can either
             // be a 'mousemove' or 'touchmove' event,
             // caluclate the position of the overlay
-            $document.on(evenetConfig.move, handleDrag);
+            $document.on(eventConfig.move, handleDrag);
 
             // when the release action is triggered unbind
             // event listerners on drag an elements
-            $document.on(evenetConfig.release, removeListeners.bind(null, evenetConfig));
+            $document.on(eventConfig.release, removeListeners.bind(null, eventConfig));
           });
 
         });
