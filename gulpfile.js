@@ -10,3 +10,5 @@ gulp.task('dev:client',
   ['lint:client:watch', 'sass:watch', 'serve', 'test:client']);
 
 gulp.task('dev:server', ['lint:server:watch', 'test:server']);
+
+gulp.task('build', ['test:client', 'sass:build', 'minify']);

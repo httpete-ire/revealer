@@ -14,7 +14,7 @@ exports.config =  {
   js: {
     client: './src/**/*.js'
   },
-  build: './example',
+  build: './dist',
   port: 3000,
   templates: './client/app/js/views/**/*.html',
   app: './example'

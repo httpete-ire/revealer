@@ -41,5 +41,6 @@ function sass(opts) {
     }))
     .pipe($.if(!opts.build, $.sourcemaps.write(), $.header(banner, { package: package })))
     .pipe(gulp.dest(config.styles.css))
-  .pipe(browserSync.reload({stream:true}));;
+    .pipe(gulp.dest(config.build))
+    .pipe(browserSync.reload({stream:true}));
 }
