@@ -1,8 +1,6 @@
-# Revealer
+![revealer](https://cloud.githubusercontent.com/assets/1556430/8511629/36122bdc-2319-11e5-8114-e2aa97a88cb1.jpg)
 
 Angular directive that allows two images to be layered on top of each other and compared using a slider, [view demo](http://httpete.com/revealer/). Based on [cody house's](http://codyhouse.co/gem/css-jquery-image-comparison-slider/) jQuery version
-
-![revealer](https://cloud.githubusercontent.com/assets/1556430/8511629/36122bdc-2319-11e5-8114-e2aa97a88cb1.jpg)
 
 ##Documentation
 
