@@ -51,7 +51,7 @@
 
       var startPosition = scope.startPosition = (validStartPosition) ? parseInt(scope.startPosition, 10) : 50;
 
-      angular.element(document).ready(function() {
+      $document.ready(function() {
 
         // store the needed elements
         var handle = getElem(elem, '.revealer__handle');
