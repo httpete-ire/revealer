@@ -64,14 +64,28 @@
 
         var revealerSettings;
         var handlerSettings;
+        var handleOffset = 0;
 
         angular.forEach(multipleEvents, function(eventConfig) {
 
           handle.on(eventConfig.action, function(e) {
+            var clickPos;
 
             handle.addClass(handleClass);
             revealerSettings = getDimensions(revealer);
             handlerSettings = getDimensions(handle);
+
+            // get the click/touch postiton of the handler
+            clickPos = mousePos(e, handlerSettings).x;
+
+            // if the click position is on the other side of the handler
+            // we have to set a negative offset, also do some maths to
+            // calculate the actual value to offset
+            if (clickPos > handlerSettings.width / 2) {
+              handleOffset = -(clickPos - handlerSettings.width / 2);
+            } else {
+              handleOffset = (handlerSettings.width / 2 - clickPos);
+            }
 
             // when the handle is dragged, can either
             // be a 'mousemove' or 'touchmove' event,
@@ -98,6 +112,8 @@
           var eventObject = (e.type === 'mousemove') ? e : e.changedTouches[0];
           var position = mousePos(eventObject, revealerSettings);
           var percentage;
+
+          position.x += handleOffset;
 
           if (position.x < 0 || position.x > revealerSettings.width) {
             return;

@@ -70,4 +70,18 @@ Label to appear on the bottom image
 ````
 start-position="60"
 ````
+
 set the start position of the revealer in percentage (default : 50)
+
+# Change log
+
+#### 0.1.1
+* fix offset issue #6
+* updated gulp task to output to a single destination
+
+#### 0.0.1
+* intital release
+
+# License
+
+MIT

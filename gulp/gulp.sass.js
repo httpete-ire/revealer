@@ -12,14 +12,16 @@ gulp.task('sass:watch', function() {
 gulp.task('sass:dev', function() {
   return sass({
     outputStyle: 'expanded',
-    build: false
+    build: false,
+    dest: config.styles.css
   });
 });
 
 gulp.task('sass:build', function() {
   return sass({
     outputStyle: 'compressed',
-    build: true
+    build: true,
+    dest: config.build
   });
 });
 
@@ -40,7 +42,6 @@ function sass(opts) {
       outputStyle: opts.outputStyle
     }))
     .pipe($.if(!opts.build, $.sourcemaps.write(), $.header(banner, { package: package })))
-    .pipe(gulp.dest(config.styles.css))
-    .pipe(gulp.dest(config.build))
+    .pipe(gulp.dest(opts.dest))
     .pipe(browserSync.reload({stream:true}));
 }

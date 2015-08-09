@@ -1,8 +1,8 @@
 {
   "name": "revealer",
-  "version": "0.0.2",
+  "version": "0.1.1",
   "description": "An Angular directive that overlays an image on another",
-  "main": "gulpfile.js",
+  "main": "dist/revealer.min.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
