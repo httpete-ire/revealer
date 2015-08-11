@@ -75,6 +75,9 @@ set the start position of the revealer in percentage (default : 50)
 
 # Change log
 
+#### 0.1.2
+* fix release listener issue [#11](/../../issues/11)
+
 #### 0.1.1
 * fix offset issue #6
 * updated gulp task to output to a single destination

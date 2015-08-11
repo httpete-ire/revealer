@@ -94,7 +94,7 @@
 
             // when the release action is triggered unbind
             // event listerners on drag an elements
-            $document.on(eventConfig.release, removeListeners.bind(null, eventConfig));
+            $document.on(eventConfig.release, removeListeners);
           });
 
         });
@@ -130,7 +130,10 @@
          * @param  {Object} config
          * @param  {Event object} e
          */
-        function removeListeners(config, e) {
+        function removeListeners(e) {
+          var configIndex = (e.type === multipleEvents[0].release) ? 0 : 1;
+          var config = multipleEvents[configIndex];
+
           handle.removeClass(handleClass);
           $document.off(config.move, handleDrag);
           $document.off(config.release, removeListeners);

@@ -1,6 +1,6 @@
 {
   "name": "revealer",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "An Angular directive that overlays an image on another",
   "main": "dist/revealer.min.js",
   "scripts": {
