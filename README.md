@@ -83,6 +83,9 @@ if set on the scope, this function will be invoked when the drag action has comp
 
 # Change log
 
+#### 0.1.4
+* support UMD [#7](/../../issues/7)
+
 #### 0.1.3
 * updated revealer tests
 * onComplete function fature added [#9](/../../issues/9)
