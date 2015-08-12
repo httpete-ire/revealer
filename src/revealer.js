@@ -1,8 +1,31 @@
-(function() {
+(function(root, factory) {
   'use strict';
 
+  if (typeof define === 'function' && define.amd) {
+    // AMD support
+    define(['angular'], factory);
+  } else if (typeof module !== 'undefined' && typeof module.exports === 'object') {
+    // commonJS support
+    module.exports = factory(require('angular'));
+  } else {
+    // no module loading system
+    return factory(root.angular);
+  }
+
+})(this, function(angular) {
+
+  'use strict';
+
+  var module = 'revealer';
+
+  /**
+   * ngDoc module
+   * @name 'revealer'
+   * @description allow two images to be layered on top of each other
+   *              and compared using a drag handler
+   */
   angular
-  .module('revealer', [])
+  .module(module, [])
   .directive('revealer', revealer);
 
   var multipleEvents = [{
@@ -17,6 +40,15 @@
 
   revealer.$inject = ['$document'];
 
+  /**
+   * @ngdoc directive
+   * @name revealer.directive:revealer
+   * @description directive that will take two images and create a handler *              that allows for the top image to be adjusted that reveals
+   *              the image below. Images will be inherit the size of its
+   *              parent container
+   * @element <revealer top-image="top.png" top-label="Top Image" bottom-image="bottom.png" bottom-label="Bottom Label"></revealer>
+   * @scope
+   */
   function revealer($document) {
     return {
       restrcit: 'E',
@@ -200,4 +232,5 @@
     return value + '%';
   }
 
-})();
+  return module;
+});
