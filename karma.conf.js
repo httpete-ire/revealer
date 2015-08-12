@@ -3,12 +3,13 @@ module.exports = function(config) {
     basePath: '',
     autoWatch: true,
     browsers: ['PhantomJS'],
-    frameworks: ['mocha', 'chai'],
+    frameworks: ['mocha', 'chai', 'sinon'],
     plugins: [
       'karma-spec-reporter',
       'karma-phantomjs-launcher',
       'karma-mocha',
-      'karma-chai'
+      'karma-chai',
+      'karma-sinon'
     ],
     files: [
       './node_modules/angular/angular.js',

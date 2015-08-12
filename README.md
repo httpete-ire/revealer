@@ -71,9 +71,20 @@ Label to appear on the bottom image
 start-position="60"
 ````
 
+####on-complete (optional)
+
+````
+on-complete="vm.onComplete('called from the controller')"
+````
+
 set the start position of the revealer in percentage (default : 50)
 
 # Change log
+
+#### 0.1.3
+* updated revealer tests
+* onComplete function fature added [#9](/../../issues/9)
+* updated documentation
 
 #### 0.1.2
 * fix release listener issue [#11](/../../issues/11)

@@ -34,7 +34,8 @@
         toplabel: '@',     topLabel: '@',
         bottomimage: '@',  bottomImage: '@',
         topimage: '@',     topImage: '@',
-        startPosition: '@'
+        startPosition: '@',
+        onComplete: '&'
       },
       link: link
     };
@@ -133,6 +134,10 @@
         function removeListeners(e) {
           var configIndex = (e.type === multipleEvents[0].release) ? 0 : 1;
           var config = multipleEvents[configIndex];
+
+          if (scope.onComplete) {
+            scope.onComplete();
+          }
 
           handle.removeClass(handleClass);
           $document.off(config.move, handleDrag);
