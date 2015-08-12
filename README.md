@@ -71,13 +71,15 @@ Label to appear on the bottom image
 start-position="60"
 ````
 
+set the start position of the revealer in percentage (default : 50)
+
 ####on-complete (optional)
 
 ````
 on-complete="vm.onComplete('called from the controller')"
 ````
 
-set the start position of the revealer in percentage (default : 50)
+if set on the scope, this function will be invoked when the drag action has complete
 
 # Change log
 
