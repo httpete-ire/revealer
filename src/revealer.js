@@ -83,21 +83,28 @@
       // ensure the start position is a valid number and is less then 100%
       var validStartPosition = (!isNaN(parseInt(scope.startPosition, 10)) && scope.startPosition < 100);
 
+      // set startPosition to either valid number provided or 50
       var startPosition = scope.startPosition = (validStartPosition) ? parseInt(scope.startPosition, 10) : 50;
+
+      var handle;
+      var topImage;
+      var revealer;
+      var handleClass;
+      var revealerSettings;
+      var handlerSettings;
+      var handleOffset = 0;
+
+      var handleDrag = throttle(_handleDrag, 40);
 
       $document.ready(function() {
 
         // store the needed elements
-        var handle = getElem(elem, '.revealer__handle');
-        var topImage = getElem(elem, '.revealer__top-image');
-        var revealer = getElem(elem, '.revealer__container');
-        var handleClass = 'revealer__handle--drag';
+        handle = getElem(elem, '.revealer__handle');
+        topImage = getElem(elem, '.revealer__top-image');
+        revealer = getElem(elem, '.revealer__container');
+        handleClass = 'revealer__handle--drag';
 
         setRevealPosition(handle, topImage, startPosition);
-
-        var revealerSettings;
-        var handlerSettings;
-        var handleOffset = 0;
 
         angular.forEach(multipleEvents, function(eventConfig) {
 
@@ -132,54 +139,55 @@
 
         });
 
-        /**
-         * handle the drag of the handle, if the handle is
-         * draged outside the container do nothing. Otherwise
-         * calculate the percentage and set the position of
-         * the handle and the width of the topImage container
-         * @param  {Event Object} e : Event Object
-         */
-        function handleDrag(e) {
-          e.preventDefault();
+      }); // ready
 
-          var eventObject = (e.type === 'mousemove') ? e : e.changedTouches[0];
-          var position = mousePos(eventObject, revealerSettings);
-          var percentage;
+      /**
+       * handle the drag of the handle, if the handle is
+       * draged outside the container do nothing. Otherwise
+       * calculate the percentage and set the position of
+       * the handle and the width of the topImage container
+       * @param  {Event Object} e : Event Object
+       */
+      function _handleDrag(e) {
+        e.preventDefault();
 
-          position.x += handleOffset;
+        var eventObject = (e.type === 'mousemove') ? e : e.changedTouches[0];
+        var position = mousePos(eventObject, revealerSettings);
+        var percentage;
 
-          if (position.x < 0 || position.x > revealerSettings.width) {
-            return;
-          }
+        position.x += handleOffset;
 
-          percentage = (position.x / revealerSettings.width) * 100;
-
-          setRevealPosition(handle, topImage, percentage);
+        if (position.x < 0 || position.x > revealerSettings.width) {
+          return;
         }
 
-        /**
-         * ensure only the correct event listener functions
-         * are removed from the 'document' object
-         * @param  {Object} config
-         * @param  {Event object} e
-         */
-        function removeListeners(e) {
-          var configIndex = (e.type === multipleEvents[0].release) ? 0 : 1;
-          var config = multipleEvents[configIndex];
+        percentage = (position.x / revealerSettings.width) * 100;
 
-          if (scope.onComplete) {
-            scope.onComplete();
-          }
+        setRevealPosition(handle, topImage, percentage);
+      }
 
-          handle.removeClass(handleClass);
-          $document.off(config.move, handleDrag);
-          $document.off(config.release, removeListeners);
+      /**
+       * ensure only the correct event listener functions
+       * are removed from the 'document' object
+       * @param  {Object} config
+       * @param  {Event object} e
+       */
+      function removeListeners(e) {
+        var configIndex = (e.type === multipleEvents[0].release) ? 0 : 1;
+        var config = multipleEvents[configIndex];
+
+        if (scope.onComplete) {
+          scope.onComplete();
         }
 
-      });
-    }
+        handle.removeClass(handleClass);
+        $document.off(config.move, handleDrag);
+        $document.off(config.release, removeListeners);
+      }
 
-  }
+    } // link
+
+  } // revealer
 
   /**
    * set the position of the handler and the revealer
@@ -230,6 +238,33 @@
    */
   function appendPercentage(value) {
     return value + '%';
+  }
+
+  /**
+   * utility function to throttle the execution
+   * of the callback, this is useful when every
+   * opertations need to be done on events that
+   * get executed in rapid succession. The callback
+   * will get executed after the delay
+   * @param  {Function} cb
+   * @param  {Number}   delay
+   * @return {Function}
+   */
+  function throttle(cb, delay) {
+    var context = this;
+    var wait = false;
+
+    function reset() {
+      wait = false;
+    }
+
+    return function() {
+      if (!wait) {
+        cb.apply(context, arguments);
+        wait = true;
+        setTimeout(reset, delay);
+      }
+    }
   }
 
   return module;
