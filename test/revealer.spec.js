@@ -13,7 +13,7 @@ describe('revealer directive', function() {
 
     compile = $compile;
 
-    element = render($compile, '<revealer topimage="test.png" bottomimage="test1.png" on-complete="onComplete()"></revealer>', $scope);
+    element = render($compile, '<revealer top-image="test.png" bottom-image="test1.png" on-complete="onComplete()"></revealer>', $scope);
 
   }));
 
@@ -23,8 +23,8 @@ describe('revealer directive', function() {
   });
 
   it('should have the values set on it', function() {
-    expect(scope.topimage).to.equal('test.png');
-    expect(scope.bottomimage).to.equal('test1.png');
+    expect(scope.topImage).to.equal('test.png');
+    expect(scope.bottomImage).to.equal('test1.png');
   });
 
   it('should have a start postion attribute', function() {
@@ -33,7 +33,7 @@ describe('revealer directive', function() {
 
   it('should set the start postion attribute', function() {
 
-    element = render(compile, '<revealer topimage="test.png" bottomimage="test1.png" start-position="45"></revealer>', $scope);
+    element = render(compile, '<revealer top-image="test.png" bottom-image="test1.png" start-position="45"></revealer>', $scope);
 
     expect(Number(scope.startPosition)).to.equal(45);
   });
