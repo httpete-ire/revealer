@@ -112,7 +112,7 @@
           angular.element($window).on('scroll', handleScroll);
         }
 
-        (!scope.pageScroll) ? setRevealPosition(handle, topImage, startPosition) : setRevealPosition(handle, topImage, 0);
+        (!scope.scroll) ? setRevealPosition(handle, topImage, startPosition) : setRevealPosition(handle, topImage, 0);
 
         angular.forEach(multipleEvents, function(eventConfig) {
 
@@ -189,7 +189,7 @@
         if (inView(elem, $window, scope.scrollOffset)) {
 
           var elemTop = getDimensions(elem[0].parentNode).top;
-          var height =  window.innerHeight - 500;
+          var height =  window.innerHeight - scope.scrollOffset;
           var percentage = (height - elemTop) / height * 100;
 
           if (percentage > 0 && percentage < 100) {
