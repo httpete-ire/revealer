@@ -1,8 +1,10 @@
-![revealer](https://cloud.githubusercontent.com/assets/1556430/8511629/36122bdc-2319-11e5-8114-e2aa97a88cb1.jpg)
+#Revealer
 
-Angular directive that allows two images to be layered on top of each other and compared using a slider, [view demo](http://httpete.com/revealer/). Based on [cody house's](http://codyhouse.co/gem/css-jquery-image-comparison-slider/) jQuery version
+![revealer](https://cloud.githubusercontent.com/assets/1556430/9289557/edcbd1c4-436c-11e5-8bb4-5de517ab6136.gif)
 
-##Documentation
+Angular directive that allows two images to be layered on top of each other and compared using a slider, [demo](http://httpete.com/revealer/) or [scroll demo](http://httpete.com/revealer/scroll).
+
+#Documentation
 
 Include revelaer module source file in html
 
@@ -21,67 +23,94 @@ angular.moudle('myApp', ['revealer']);
 Then declare the revealer directive in your html.
 
 ```html
-<revealer topimage="top.png" toplabel="Top Image" bottomimage="bottom.png" bottomlabel="Bottom Label"></revealer>
-```
-
-Alternatively,
-
-```html
 <revealer top-image="top.png" top-label="Top Image" bottom-image="bottom.png" bottom-label="Bottom Label"></revealer>
 ```
 
-###Directive attributes
+## Options
 
+* [top-image](#top-image)
+* [bottom-image](#bottom-image)
+* [top-label](#top-label-optional)
+* [bottom-label](#bottom-label-optional)
+* [start-position](#start-position-optional)
+* [on-complete](#on-complete-optional)
+* [page-scroll](#page-scroll-optional)
+* [page-offset](#page-offset-optional)
 
-####topimage
-
-````
-topimage="top.png"
-````
-
+####top-image
 Path of image to appear on the top layer. This is the image that is revealed
 
-####bottomimage
-
 ````
-bottomimage="bottom.png"
+top-image="top.png"
 ````
 
+####bottom-image
 Path of image to appear on the bottom layer
 
-####toplabel (optional)
-
 ````
-toplabel="Top Image"
+bottom-image="bottom.png"
 ````
 
+
+####top-label (optional)
 Label to appear on the top image
 
-####bottomlabel (optional)
-
 ````
-bottomlabel="Bottom Label"
+top-label="Top Image"
 ````
 
+
+####bottom-label (optional)
 Label to appear on the bottom image
 
+````
+bottom-label="Bottom Label"
+````
+
+
 ####start-position (optional)
+set the start position of the revealer in percentage (default : 50)
 
 ````
 start-position="60"
 ````
 
-set the start position of the revealer in percentage (default : 50)
 
 ####on-complete (optional)
+if set on the scope, this function will be invoked when the drag action has complete
 
 ````
 on-complete="vm.onComplete('called from the controller')"
 ````
 
-if set on the scope, this function will be invoked when the drag action has complete
+####scroll (optional)
+
+Set postion of the revealer on scroll, the revealer will only happen when the element is in the windows viewport.
+
+*note* when set the start-postion will be 0
+
+````
+scroll="true"
+````
+
+####scroll-offset (optional)
+
+change the trigger location of the scroll functionality
+
+````
+scroll-offset="500"
+````
 
 # Change log
+
+#### 1.0.0
+* throttle function [#8](/../../issues/8)
+* page-scroll functionality [#10](/../../issues/10)
+* updated documentation
+
+**breaking changes**
+
+* removed topimage, bottomimage, toplabel, bottomlabel
 
 #### 0.1.4
 * support UMD [#7](/../../issues/7)

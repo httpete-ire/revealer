@@ -38,7 +38,7 @@
     release: 'touchend'
   }];
 
-  revealer.$inject = ['$document'];
+  revealer.$inject = ['$document', '$window'];
 
   /**
    * @ngdoc directive
@@ -49,25 +49,27 @@
    * @element <revealer top-image="top.png" top-label="Top Image" bottom-image="bottom.png" bottom-label="Bottom Label"></revealer>
    * @scope
    */
-  function revealer($document) {
+  function revealer($document, $window) {
     return {
       restrcit: 'E',
       template: ['<div class="revealer__container">',
-                  '<img class="revealer__image" ng-src="{{bottomimage || bottomImage}}">',
-                  '<span class="revealer__label revealer__label--right">{{bottomlabel || bottomLabel}}</span>',
+                  '<img class="revealer__image" ng-src="{{bottomImage}}">',
+                  '<span class="revealer__label revealer__label--right">{{ bottomLabel}}</span>',
                   '<div class="revealer__top-image">',
-                    '<img class="revealer__image" ng-src="{{topimage || topImage}}">',
-                    '<span class="revealer__label revealer__label--left">{{toplabel || topLabel}}</span>',
+                    '<img class="revealer__image" ng-src="{{topImage}}">',
+                    '<span class="revealer__label revealer__label--left">{{topLabel}}</span>',
                   '</div>',
                   '<span class="revealer__handle"></span>',
                 '</div>'].join(''),
       scope: {
-        bottomlabel: '@',  bottomLabel: '@',
-        toplabel: '@',     topLabel: '@',
-        bottomimage: '@',  bottomImage: '@',
-        topimage: '@',     topImage: '@',
-        startPosition: '@',
-        onComplete: '&'
+        bottomLabel: '@',
+        topLabel: '@',
+        bottomImage: '@',
+        topImage: '@',
+        startPosition: '=?',
+        onComplete: '&',
+        scroll: '=?',
+        scrollOffset: '=?'
       },
       link: link
     };
@@ -75,16 +77,15 @@
     function link(scope, elem, attr) {
 
       // throw error when image path not provided
-      if ((!scope.topimage && !scope.topImage) ||
-          (!scope.bottomimage && !scope.bottomImage)) {
+      if ((!scope.topImage) ||
+          (!scope.bottomImage)) {
         throw Error('please provide a valid path for the top and bottom image attributes on the revealer directive');
       }
 
-      // ensure the start position is a valid number and is less then 100%
-      var validStartPosition = (!isNaN(parseInt(scope.startPosition, 10)) && scope.startPosition < 100);
+      scope.startPosition = (scope.startPosition && scope.startPosition < 100) ? scope.startPosition : 50;
 
-      // set startPosition to either valid number provided or 50
-      var startPosition = scope.startPosition = (validStartPosition) ? parseInt(scope.startPosition, 10) : 50;
+      scope.scroll = (scope.scroll === true) ? true : false;
+      scope.scrollOffset = scope.scrollOffset || 0;
 
       var handle;
       var topImage;
@@ -95,6 +96,7 @@
       var handleOffset = 0;
 
       var handleDrag = throttle(_handleDrag, 40);
+      var handleScroll = throttle(_handleScroll, 20);
 
       $document.ready(function() {
 
@@ -104,7 +106,13 @@
         revealer = getElem(elem, '.revealer__container');
         handleClass = 'revealer__handle--drag';
 
-        setRevealPosition(handle, topImage, startPosition);
+        if (scope.scroll) {
+          // $window does not have on method so it must be wrapped
+          // in an angular.element to use this method
+          angular.element($window).on('scroll', handleScroll);
+        }
+
+        (!scope.pageScroll) ? setRevealPosition(handle, topImage, startPosition) : setRevealPosition(handle, topImage, 0);
 
         angular.forEach(multipleEvents, function(eventConfig) {
 
@@ -167,6 +175,32 @@
       }
 
       /**
+       * when the pages scrolls calculate if the element is in the
+       * viewport and then set the reveal position in relation to
+       * the scroll position of the element
+       * @param  {Event Object} e
+       */
+      function _handleScroll(e) {
+        e.preventDefault();
+
+        // calculate if elem in viewport
+        // if it is, calulate the scroll percentage
+        // in relation to the elem, set percentage for revealer
+        if (inView(elem, $window, scope.scrollOffset)) {
+
+          var elemTop = getDimensions(elem[0].parentNode).top;
+          var height =  window.innerHeight - 500;
+          var percentage = (height - elemTop) / height * 100;
+
+          if (percentage > 0 && percentage < 100) {
+
+            setRevealPosition(handle, topImage, percentage);
+          }
+
+        }
+      }
+
+      /**
        * ensure only the correct event listener functions
        * are removed from the 'document' object
        * @param  {Object} config
@@ -183,6 +217,10 @@
         handle.removeClass(handleClass);
         $document.off(config.move, handleDrag);
         $document.off(config.release, removeListeners);
+
+        if (scope.pageScroll) {
+          angular.element($window).off('scroll', handleScroll);
+        }
       }
 
     } // link
@@ -228,7 +266,8 @@
    * @return {Object}      getBoundingClientRect() results
    */
   function getDimensions(elem) {
-    return elem[0].getBoundingClientRect();
+    elem = elem[0] || elem;
+    return elem.getBoundingClientRect();
   }
 
   /**
@@ -251,7 +290,7 @@
    * @return {Function}
    */
   function throttle(cb, delay) {
-    var context = this;
+    var _this = this;
     var wait = false;
 
     function reset() {
@@ -260,11 +299,25 @@
 
     return function() {
       if (!wait) {
-        cb.apply(context, arguments);
+        cb.apply(_this, arguments);
         wait = true;
         setTimeout(reset, delay);
       }
     }
+  }
+
+  /**
+   * return if the DOM element is within the window
+   * viewport, offset can be applied
+   * @param  {DOM Object}   elem
+   * @param  {Object}       global
+   * @param  {Number}       offset
+   * @return {Boolean}
+   */
+  function inView(elem, win, offset) {
+    offset = offset || 0;
+    var dimensions = getDimensions(elem[0].parentNode || elem);
+    return (!!dimensions && dimensions.bottom >= 0 && dimensions.top <= win.innerHeight - offset);
   }
 
   return module;
