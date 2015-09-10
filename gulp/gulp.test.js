@@ -15,7 +15,7 @@ gulp.task('test:server', function() {
 gulp.task('jasmine', function() {
   return gulp
   .src(config.tests.public)
-  .pipe($.karma({ configFile: config.tests.karma,  action: 'watch' }));
+  .pipe($.karma({ configFile: config.tests.karma }));
 });
 
 gulp.task('test:client', function() {
