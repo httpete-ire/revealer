@@ -4,7 +4,7 @@
   "description": "An Angular directive that overlays an image on another",
   "main": "dist/revealer.min.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "gulp jasmine"
   },
   "author": "Pete Redmond",
   "license": "MIT",
