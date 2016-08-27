@@ -16,7 +16,7 @@ Mark the revealer module as a dependecy of your angular app
 
 
 ```javascript
-angular.moudle('myApp', ['revealer']);
+angular.module('myApp', ['revealer']);
 ```
 
 
