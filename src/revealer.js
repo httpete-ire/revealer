@@ -112,7 +112,7 @@
           angular.element($window).on('scroll', handleScroll);
         }
 
-        (!scope.scroll) ? setRevealPosition(handle, topImage, startPosition) : setRevealPosition(handle, topImage, 0);
+        (!scope.scroll) ? setRevealPosition(handle, topImage, scope.startPosition) : setRevealPosition(handle, topImage, 0);
 
         angular.forEach(multipleEvents, function(eventConfig) {
 
